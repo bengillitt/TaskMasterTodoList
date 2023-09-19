@@ -1,0 +1,20 @@
+.todoli {
+  /* display: flex;
+  justify-content: center; */
+  /* align-items: center; */
+  background-color: grey;
+}
+
+.tododiv {
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.addTodo {
+  display: flex;
+  margin-left: 500px;
+  margin-right: 500px;
+}
