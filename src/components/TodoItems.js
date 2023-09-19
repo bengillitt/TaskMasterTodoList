@@ -1,22 +1,29 @@
-const TodoItems = (props) => {
-  const deleteHandler = (event) => {
-    event.preventDefault();
+import "./Todo.css";
+import TodoItem from "./TodoItem";
 
-    props.remove(event.target.value);
+const TodoItems = (props) => {
+  const deleteHandler = (todoItem, isChecked) => {
+    props.remove(todoItem, isChecked);
+  };
+
+  const stopDeletionHandler = () => {
+    props.stopDeletion();
   };
 
   return (
     <ul>
-      {props.items.map((test) => {
+      {props.items.map((item) => {
         return (
-          <li className="todoli" key={test}>
-            <input
-              type="checkbox"
-              name="test"
-              onChange={deleteHandler}
-              value={test}
-            />
-            {test}
+          <li className="todoli" key={item}>
+            <div className="input-group mb-3 todoli">
+              <div className="input-group-text todoli">
+                <TodoItem
+                  item={item}
+                  remove={deleteHandler}
+                  stopDeletion={stopDeletionHandler}
+                />
+              </div>
+            </div>
           </li>
         );
       })}
