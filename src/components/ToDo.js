@@ -9,34 +9,19 @@ const Todo = () => {
 
   const [error, setError] = useState("");
 
-  const [toBeDeleted, setToBeDeleted] = useState("");
-
   const [timeoutId, setTimeoutId] = useState();
 
   const [todoArray, setTodoArray] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
+    if (error !== "" && error !== "New Todo") {
+      setTimeout(() => {
+        setError("New Todo");
+      }, 3000);
+    } else {
       setError("New Todo");
-    }, 3000);
-  }, [error]);
-
-  useEffect(() => {
-    if (toBeDeleted !== "") {
-      let removeTodoArray = todoArray;
-
-      removeTodoArray = removeTodoArray.filter(
-        (todo) => todo.toString() !== toBeDeleted
-      );
-
-      setTimeoutId(
-        setTimeout(() => {
-          setTodoArray(removeTodoArray);
-        }, 5000)
-      );
-      setToBeDeleted("");
     }
-  }, [toBeDeleted, todoArray]);
+  }, [error]);
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -48,7 +33,16 @@ const Todo = () => {
 
   const removeFromArray = (todoEvent, isChecked) => {
     if (isChecked === false) {
-      setToBeDeleted(todoEvent);
+      let removeTodoArray = todoArray;
+      removeTodoArray = removeTodoArray.filter(
+        (todo) => todo.toString() !== todoEvent
+      );
+
+      setTimeoutId(
+        setTimeout(() => {
+          setTodoArray(removeTodoArray);
+        }, 2000)
+      );
     } else {
       console.log("error");
     }

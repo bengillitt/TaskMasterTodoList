@@ -6,12 +6,15 @@ const TodoItem = (props) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const onChange = async (event) => {
-    event.preventDefault();
     if (isChecked === false) {
       setIsChecked(true);
+      console.log(event.target.value);
+      console.log(isChecked);
       deleteHandler(isChecked, event.target.value);
+      console.log(isChecked);
     } else if (isChecked === true) {
       stopDeletionHandler();
+      setIsChecked(false);
       console.log(isChecked);
     } else {
       console.log("error");
@@ -19,7 +22,6 @@ const TodoItem = (props) => {
   };
 
   const stopDeletionHandler = () => {
-    setIsChecked(!true);
     props.stopDeletion();
   };
 
