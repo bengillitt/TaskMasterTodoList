@@ -14,6 +14,13 @@ const Todo = () => {
   const [todoArray, setTodoArray] = useState([]);
 
   useEffect(() => {
+    if (localStorage.getItem("todoArray")) {
+      const primaryTodoArray = JSON.parse(localStorage.getItem("todoArray"));
+      setTodoArray(primaryTodoArray);
+    }
+  }, []);
+
+  useEffect(() => {
     if (error !== "" && error !== "New Todo") {
       setTimeout(() => {
         setError("New Todo");
@@ -41,6 +48,7 @@ const Todo = () => {
       setTimeoutId(
         setTimeout(() => {
           setTodoArray(removeTodoArray);
+          localStorage.setItem("todoArray", JSON.stringify(removeTodoArray));
         }, 2000)
       );
     } else {
@@ -64,6 +72,7 @@ const Todo = () => {
         updateTodoArray.push(NewTodo);
 
         setTodoArray(updateTodoArray);
+        localStorage.setItem("todoArray", JSON.stringify(updateTodoArray));
       } else {
         setTodo("");
         setError("Todo cannot be blank!");
