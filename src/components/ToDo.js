@@ -13,6 +13,12 @@ const Todo = () => {
 
   const [todoArray, setTodoArray] = useState([]);
 
+  if (!localStorage.getItem("archiveArray")) {
+    localStorage.setItem("archiveArray", JSON.stringify([]));
+  }
+
+  // console.log(localStorage.getItem("archiveArray"))
+
   useEffect(() => {
     if (localStorage.getItem("todoArray")) {
       const primaryTodoArray = JSON.parse(localStorage.getItem("todoArray"));
@@ -49,6 +55,9 @@ const Todo = () => {
         setTimeout(() => {
           setTodoArray(removeTodoArray);
           localStorage.setItem("todoArray", JSON.stringify(removeTodoArray));
+          const archiveArray = JSON.parse(localStorage.getItem("archiveArray"));
+          archiveArray.push(todoEvent);
+          localStorage.setItem("archiveArray", JSON.stringify(archiveArray));
         }, 2000)
       );
     } else {
