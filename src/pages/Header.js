@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 
 const Header = () => {
+  const [isLogin, setIsLogin] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("isLogin") === "true") {
+      setIsLogin("true");
+    } else {
+      setIsLogin("false");
+    }
+  }, []);
+
+  const LogoutHandler = () => {
+    localStorage.setItem("isLogin", false);
+    localStorage.setItem("username", "");
+    localStorage.setItem("password", "");
+    setIsLogin("false");
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -27,54 +44,34 @@ const Header = () => {
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="./archives">
                   Archives
                 </Link>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="./"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Dropdown
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a className="dropdown-item" href="./">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="./">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="./">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
-              </li>
+              </li> */}
             </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
+            {isLogin !== "true" ? (
+              <div>
+                <button className="btn btn-outline-success" type="submit">
+                  <Link className="btn" to={"./signup"}>
+                    Signup
+                  </Link>
+                </button>
+                <button className="btn btn-outline-success" type="submit">
+                  <Link className="btn" to={"./login"}>
+                    Login
+                  </Link>
+                </button>
+              </div>
+            ) : (
+              <button
+                className="btn btn-outline-success"
+                type="button"
+                onClick={LogoutHandler}
+              >
+                Logout
               </button>
-            </form>
+            )}
           </div>
         </div>
       </nav>

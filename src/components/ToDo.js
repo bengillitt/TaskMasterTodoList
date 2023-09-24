@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 
 import TodoItems from "./TodoItems";
 
+import axios from "axios";
+
 const Todo = () => {
   const [todo, setTodo] = useState("");
 
@@ -13,18 +15,66 @@ const Todo = () => {
 
   const [todoArray, setTodoArray] = useState([]);
 
+  let isLogin = localStorage.getItem("isLogin");
+
   if (!localStorage.getItem("archiveArray")) {
     localStorage.setItem("archiveArray", JSON.stringify([]));
   }
 
-  // console.log(localStorage.getItem("archiveArray"))
+  const getItemsFromDatabase = async (formBody) => {
+    await axios({
+      method: "post",
+      url: "http://localhost:9000/getTodos",
+      data: formBody,
+    }).then((response) => {
+      const PrimaryTodoArray = response.data;
+      const SecondaryTodoArray = [];
+      for (var i = 0; i < PrimaryTodoArray.length; i++) {
+        SecondaryTodoArray.push(PrimaryTodoArray[i].todo);
+      }
+      setTodoArray(SecondaryTodoArray);
+    });
+  };
+
+  const removeItemFromDatabase = async (formBody) => {
+    await axios({
+      method: "post",
+      url: "http://localhost:9000/removeTodo",
+      data: formBody,
+    }).then((response) => console.log(response.data));
+  };
+
+  const addItemToDatabase = async (formBody) => {
+    await axios({
+      method: "post",
+      url: "http://localhost:9000/addTodo",
+      data: formBody,
+    }).then((response) => console.log(response.data));
+  };
 
   useEffect(() => {
-    if (localStorage.getItem("todoArray")) {
+    if (isLogin === "true") {
+      const username = localStorage.getItem("username");
+      const password = localStorage.getItem("password");
+
+      var details = {
+        username: username,
+        password: password,
+      };
+
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+      getItemsFromDatabase(formBody);
+    } else if (localStorage.getItem("todoArray")) {
       const primaryTodoArray = JSON.parse(localStorage.getItem("todoArray"));
       setTodoArray(primaryTodoArray);
     }
-  }, []);
+  }, [isLogin]);
 
   useEffect(() => {
     if (error !== "" && error !== "New Todo") {
@@ -45,6 +95,9 @@ const Todo = () => {
   };
 
   const removeFromArray = (todoEvent, isChecked) => {
+    const username = localStorage.getItem("username");
+    const password = localStorage.getItem("password");
+
     if (isChecked === false) {
       let removeTodoArray = todoArray;
       removeTodoArray = removeTodoArray.filter(
@@ -54,10 +107,28 @@ const Todo = () => {
       setTimeoutId(
         setTimeout(() => {
           setTodoArray(removeTodoArray);
-          localStorage.setItem("todoArray", JSON.stringify(removeTodoArray));
-          const archiveArray = JSON.parse(localStorage.getItem("archiveArray"));
-          archiveArray.push(todoEvent);
-          localStorage.setItem("archiveArray", JSON.stringify(archiveArray));
+          if (isLogin === "true") {
+            var details = {
+              username: username,
+              password: password,
+              todo: todoEvent,
+            };
+
+            var formBody = [];
+            for (var property in details) {
+              var encodedKey = encodeURIComponent(property);
+              var encodedValue = encodeURIComponent(details[property]);
+              formBody.push(encodedKey + "=" + encodedValue);
+            }
+            formBody = formBody.join("&");
+            removeItemFromDatabase(formBody);
+          } else {
+            localStorage.setItem("todoArray", JSON.stringify(removeTodoArray));
+          }
+
+          // const archiveArray = JSON.parse(localStorage.getItem("archiveArray"));
+          // archiveArray.push(todoEvent);
+          // localStorage.setItem("archiveArray", JSON.stringify(archiveArray));
         }, 2000)
       );
     } else {
@@ -73,15 +144,40 @@ const Todo = () => {
     event.preventDefault();
     if (!todoArray.includes(todo)) {
       if (todo.split(" ").join("") !== "") {
-        const NewTodo = todo;
+        const username = localStorage.getItem("username");
+        const password = localStorage.getItem("password");
 
-        setTodo("");
+        if (todo.length < 250) {
+          const NewTodo = todo;
 
-        const updateTodoArray = todoArray;
-        updateTodoArray.push(NewTodo);
+          setTodo("");
 
-        setTodoArray(updateTodoArray);
-        localStorage.setItem("todoArray", JSON.stringify(updateTodoArray));
+          const updateTodoArray = todoArray;
+          updateTodoArray.push(NewTodo);
+
+          setTodoArray(updateTodoArray);
+          if (isLogin === "true") {
+            var details = {
+              username: username,
+              password: password,
+              todo: NewTodo,
+            };
+
+            var formBody = [];
+            for (var property in details) {
+              var encodedKey = encodeURIComponent(property);
+              var encodedValue = encodeURIComponent(details[property]);
+              formBody.push(encodedKey + "=" + encodedValue);
+            }
+            formBody = formBody.join("&");
+            addItemToDatabase(formBody);
+          } else {
+            localStorage.setItem("todoArray", JSON.stringify(updateTodoArray));
+          }
+        } else {
+          setTodo("");
+          setError("Todo is over the 250 character limit");
+        }
       } else {
         setTodo("");
         setError("Todo cannot be blank!");

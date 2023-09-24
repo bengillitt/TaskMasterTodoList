@@ -1,11 +1,27 @@
 const ArchivesList = (props) => {
+  const deleteHandler = () => {
+    props.delete(props.id);
+  };
+
+  const restoreHandler = () => {
+    props.restore(props.id);
+  };
+
   return (
-    <div key={props.id}>
+    <div>
       {props.archive}
-      <button type="button" class="btn btn-outline-primary">
-        Send to main TodoList
+      <button
+        type="button"
+        className="btn btn-outline-primary"
+        onClick={restoreHandler}
+      >
+        {props.restoreText}
       </button>
-      <button type="button" class="btn btn-outline-danger">
+      <button
+        type="button"
+        className="btn btn-outline-danger"
+        onClick={deleteHandler}
+      >
         Delete Archive
       </button>
     </div>
