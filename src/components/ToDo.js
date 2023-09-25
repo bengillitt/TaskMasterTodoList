@@ -24,7 +24,7 @@ const Todo = () => {
   const getItemsFromDatabase = async (formBody) => {
     await axios({
       method: "post",
-      url: "http://localhost:9000/getTodos",
+      url: "https://task-master-backend.vercel.app/getTodos",
       data: formBody,
     }).then((response) => {
       const PrimaryTodoArray = response.data;
@@ -39,7 +39,7 @@ const Todo = () => {
   const removeItemFromDatabase = async (formBody) => {
     await axios({
       method: "post",
-      url: "http://localhost:9000/removeTodo",
+      url: "https://task-master-backend.vercel.app/removeTodo",
       data: formBody,
     }).then((response) => console.log(response.data));
   };
@@ -47,7 +47,7 @@ const Todo = () => {
   const addItemToDatabase = async (formBody) => {
     await axios({
       method: "post",
-      url: "http://localhost:9000/addTodo",
+      url: "https://task-master-backend.vercel.app/addTodo",
       data: formBody,
     }).then((response) => console.log(response.data));
   };
