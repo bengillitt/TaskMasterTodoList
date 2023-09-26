@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const SignupPage = () => {
+const SignupPage = (props) => {
   const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState("");
+
+  useEffect(() => {
+    const isLoginString = localStorage.getItem("isLogin");
+    if (isLoginString === "true") {
+      // eslint-disable-next-line
+      setIsLogin(true);
+    } else {
+      // eslint-disable-next-line
+      setIsLogin(false);
+    }
+  }, [isLogin]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -67,43 +79,49 @@ const SignupPage = () => {
 
   return (
     <div>
-      <form onSubmit={signupHandler}>
-        <div className="input-group mb-3">
-          <span className="input-group-text" id="inputGroup-sizing-default">
-            Email
-          </span>
-          <input
-            type="text"
-            className="form-control"
-            aria-label="Sizing example input"
-            name="username"
-            value={email}
-            onChange={emailHandler}
-            aria-describedby="inputGroup-sizing-default"
-            required
-          />
-        </div>
-        <div className="input-group mb-3">
-          <span className="input-group-text" id="inputGroup-sizing-default">
-            Password
-          </span>
-          <input
-            type="password"
-            className="form-control"
-            aria-label="Sizing example input"
-            name="password"
-            value={password}
-            onChange={passwordHandler}
-            aria-describedby="inputGroup-sizing-default"
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-success">
-          Signup
-        </button>
-      </form>
+      {!isLogin ? (
+        <div>
+          <form onSubmit={signupHandler}>
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="inputGroup-sizing-default">
+                Email
+              </span>
+              <input
+                type="text"
+                className="form-control"
+                aria-label="Sizing example input"
+                name="username"
+                value={email}
+                onChange={emailHandler}
+                aria-describedby="inputGroup-sizing-default"
+                required
+              />
+            </div>
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="inputGroup-sizing-default">
+                Password
+              </span>
+              <input
+                type="password"
+                className="form-control"
+                aria-label="Sizing example input"
+                name="password"
+                value={password}
+                onChange={passwordHandler}
+                aria-describedby="inputGroup-sizing-default"
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-success">
+              Signup
+            </button>
+          </form>
 
-      {error ? <p>{error}</p> : ""}
+          {error ? <p>{error}</p> : ""}
+        </div>
+      ) : (
+        <p>Already Logged In</p>
+      )}
     </div>
   );
 };
