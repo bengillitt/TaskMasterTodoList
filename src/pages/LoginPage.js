@@ -45,9 +45,9 @@ const LoginPage = () => {
         setPassword("");
         setError(response.data);
       } else {
-        localStorage.setItem("isLogin", true);
         localStorage.setItem("username", email);
         localStorage.setItem("password", password);
+        localStorage.setItem("isLogin", true);
         navigate("/");
       }
     });
