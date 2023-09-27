@@ -39,7 +39,7 @@ const TodoItem = (props) => {
         value={props.item}
         aria-label="Checkbox for following text input"
       />
-      {props.item}
+      <p className="todoContent">{props.item}</p>
     </div>
   );
 };

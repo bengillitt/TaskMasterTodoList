@@ -193,7 +193,7 @@ const Todo = () => {
   return (
     <div>
       <div className="tododiv">
-        <h2>Items</h2>
+        <h2>Todo</h2>
         <TodoItems
           items={todoArray}
           remove={removeFromArray}
