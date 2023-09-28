@@ -15,6 +15,8 @@ const Todo = () => {
 
   const [todoArray, setTodoArray] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   let isLogin = localStorage.getItem("isLogin");
 
   if (!localStorage.getItem("archiveArray")) {
@@ -34,6 +36,7 @@ const Todo = () => {
       }
       setTodoArray(SecondaryTodoArray);
     });
+    setIsLoading(false);
   };
 
   const removeItemFromDatabase = async (formBody) => {
@@ -73,6 +76,7 @@ const Todo = () => {
     } else if (localStorage.getItem("todoArray")) {
       const primaryTodoArray = JSON.parse(localStorage.getItem("todoArray"));
       setTodoArray(primaryTodoArray);
+      setIsLoading(false);
     }
   }, [isLogin]);
 
@@ -194,15 +198,22 @@ const Todo = () => {
     <div>
       <div className="tododiv">
         <h2>Todo</h2>
-        <TodoItems
-          items={todoArray}
-          remove={removeFromArray}
-          stopDeletion={stopDeletion}
-        />
+
+        {isLoading ? (
+          <div class="spinner-border mb-4 mt-4" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        ) : (
+          <TodoItems
+            items={todoArray}
+            remove={removeFromArray}
+            stopDeletion={stopDeletion}
+          />
+        )}
       </div>
       <form onSubmit={addTodoHandler}>
         <div className="addTodo">
-          <div className="input-group mb-3 mx-3 pb-2">
+          <div className="input-group mx-3">
             <input
               type="text"
               className="form-control"
@@ -215,9 +226,8 @@ const Todo = () => {
               value={todo}
             />
           </div>
-
-          <button type="submit" className="btn btn-primary">
-            Add Todo
+          <button type="submit" className="btn btn-primary addTodoButton">
+            Add
           </button>
         </div>
       </form>
