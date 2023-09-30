@@ -67,46 +67,64 @@ const LoginPage = (props) => {
   };
 
   return (
-    <div>
+    <div className="maindiv">
       {!isLogin ? (
         <div>
           <form onSubmit={loginHandler}>
-            <div className="input-group mb-3">
-              <span className="input-group-text" id="inputGroup-sizing-default">
-                Email
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                aria-label="Sizing example input"
-                name="username"
-                value={email}
-                onChange={emailHandler}
-                aria-describedby="inputGroup-sizing-default"
-                required
-              />
+            <div className="mx-5">
+              <div className="input-group mb-3">
+                <span
+                  className="input-group-text mt-3"
+                  id="inputGroup-sizing-default"
+                >
+                  Email
+                </span>
+                <input
+                  type="text"
+                  className="form-control mt-3 inputRounding"
+                  aria-label="Sizing example input"
+                  name="username"
+                  value={email}
+                  onChange={emailHandler}
+                  aria-describedby="inputGroup-sizing-default"
+                  required
+                />
+              </div>
             </div>
-            <div className="input-group mb-3">
-              <span className="input-group-text" id="inputGroup-sizing-default">
-                Password
-              </span>
-              <input
-                type="password"
-                className="form-control"
-                aria-label="Sizing example input"
-                name="password"
-                value={password}
-                onChange={passwordHandler}
-                aria-describedby="inputGroup-sizing-default"
-                required
-              />
+            <div className="mx-5">
+              <div className="input-group mb-3">
+                <span
+                  className="input-group-text"
+                  id="inputGroup-sizing-default"
+                >
+                  Password
+                </span>
+                <input
+                  type="password"
+                  className="form-control inputRounding"
+                  aria-label="Sizing example input"
+                  name="password"
+                  value={password}
+                  onChange={passwordHandler}
+                  aria-describedby="inputGroup-sizing-default"
+                  required
+                />
+              </div>
             </div>
-            <button type="submit" className="btn btn-success">
-              Login
-            </button>
+            <div className="submitButton">
+              <button type="submit" className="btn btn-primary">
+                Login
+              </button>
+            </div>
           </form>
 
-          {error ? <p>{error}</p> : ""}
+          {error ? (
+            <div className="errorDiv">
+              <p className="errorMessage">{error}</p>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       ) : (
         <p>Already Logged In</p>

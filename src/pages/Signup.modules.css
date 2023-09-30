@@ -1,0 +1,31 @@
+.maindiv {
+  width: 99.9vw;
+  height: 92.5vh;
+  background-color: grey;
+}
+
+.inputRounding {
+  border-radius: 0px 10px 10px 0px;
+}
+
+.submitButton {
+  margin: auto;
+  width: 4%;
+}
+
+.errorMessage {
+  color: white;
+  text-align: center;
+  font-size: large;
+  line-height: 75px;
+  vertical-align: middle;
+}
+
+.errorDiv {
+  background-color: red;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 250px;
+  opacity: 70%;
+}
