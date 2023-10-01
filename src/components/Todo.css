@@ -8,6 +8,10 @@
   border-color: grey;
 }
 
+body {
+  background-color: grey;
+}
+
 .tododiv {
   text-align: center;
   margin-left: 40%;
