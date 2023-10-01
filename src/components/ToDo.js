@@ -77,6 +77,8 @@ const Todo = () => {
       const primaryTodoArray = JSON.parse(localStorage.getItem("todoArray"));
       setTodoArray(primaryTodoArray);
       setIsLoading(false);
+    } else {
+      setIsLoading(false);
     }
   }, [isLogin]);
 

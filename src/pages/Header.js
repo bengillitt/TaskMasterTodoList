@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 
-const Header = () => {
-  const [isLogin, setIsLogin] = useState("");
+const Header = (props) => {
+  const [isLogin, setIsLogin] = useState();
 
   useEffect(() => {
-    if (localStorage.getItem("isLogin") === "true") {
+    if (props.isLogin) {
       setIsLogin("true");
     } else {
       setIsLogin("false");
     }
-  }, []);
+  }, [props.isLogin]);
 
   const LogoutHandler = () => {
     localStorage.setItem("isLogin", false);
     localStorage.setItem("username", "");
     localStorage.setItem("password", "");
     setIsLogin("false");
+    console.log(setIsLogin);
   };
 
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="./">
+          <Link className="navbar-brand" to="/">
             TaskMaster
           </Link>
           <button
@@ -40,7 +41,7 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link" aria-current="page" to="./">
+                <Link className="nav-link" aria-current="page" to="/">
                   Home
                 </Link>
               </li>
@@ -53,12 +54,12 @@ const Header = () => {
             {isLogin !== "true" ? (
               <div>
                 <button className="btn btn-outline-success" type="submit">
-                  <Link className="btn" to={"./signup"}>
+                  <Link className="btn" to="/signup">
                     Signup
                   </Link>
                 </button>
                 <button className="btn btn-outline-success" type="submit">
-                  <Link className="btn" to={"./login"}>
+                  <Link className="btn" to="/login">
                     Login
                   </Link>
                 </button>

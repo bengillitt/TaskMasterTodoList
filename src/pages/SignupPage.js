@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 import "./Signup.modules.css";
 
 const SignupPage = (props) => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const isLoginString = localStorage.getItem("isLogin");
@@ -37,6 +39,8 @@ const SignupPage = (props) => {
 
   const signupHandler = async (event) => {
     event.preventDefault();
+
+    setIsLoading(true);
 
     if (email.includes("@") && email.includes(".")) {
       if (password.length > 8) {
@@ -77,72 +81,84 @@ const SignupPage = (props) => {
       setEmail("");
       setPassword("");
     }
+    setIsLoading(false);
   };
 
   return (
-    <div className="maindiv">
-      {!isLogin ? (
-        <div>
-          <form onSubmit={signupHandler}>
-            <div className="mx-5">
-              <div className="input-group mb-3">
-                <span
-                  className="input-group-text mt-3"
-                  id="inputGroup-sizing-default"
-                >
-                  Email
-                </span>
-                <input
-                  type="text"
-                  className="form-control mt-3 inputRounding"
-                  aria-label="Sizing example input"
-                  name="username"
-                  value={email}
-                  onChange={emailHandler}
-                  aria-describedby="inputGroup-sizing-default"
-                  required
-                />
-              </div>
-            </div>
-            <div className="mx-5">
-              <div className="input-group mb-3">
-                <span
-                  className="input-group-text"
-                  id="inputGroup-sizing-default"
-                >
-                  Password
-                </span>
-                <input
-                  type="password"
-                  className="form-control inputRounding"
-                  aria-label="Sizing example input"
-                  name="password"
-                  value={password}
-                  onChange={passwordHandler}
-                  aria-describedby="inputGroup-sizing-default"
-                  required
-                />
-              </div>
-            </div>
-            <h2 className="mx-5">Please don't use your real password</h2>
-            <div className="submitButton">
-              <button type="submit" className="btn btn-primary">
-                Signup
-              </button>
-            </div>
-          </form>
+    <div>
+      <Header isLogin={isLogin} />
+      <div className="maindiv">
+        {!isLogin ? (
+          <div>
+            <div>
+              <form onSubmit={signupHandler}>
+                <div className="mx-5">
+                  <div className="input-group mb-3">
+                    <span
+                      className="input-group-text mt-3"
+                      id="inputGroup-sizing-default"
+                    >
+                      Email
+                    </span>
+                    <input
+                      type="text"
+                      className="form-control mt-3 inputRounding"
+                      aria-label="Sizing example input"
+                      name="username"
+                      value={email}
+                      onChange={emailHandler}
+                      aria-describedby="inputGroup-sizing-default"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="mx-5">
+                  <div className="input-group mb-3">
+                    <span
+                      className="input-group-text"
+                      id="inputGroup-sizing-default"
+                    >
+                      Password
+                    </span>
+                    <input
+                      type="password"
+                      className="form-control inputRounding"
+                      aria-label="Sizing example input"
+                      name="password"
+                      value={password}
+                      onChange={passwordHandler}
+                      aria-describedby="inputGroup-sizing-default"
+                      required
+                    />
+                  </div>
+                </div>
+                <h2 className="mx-5">Please don't use your real password</h2>
+                <div className="submitButton">
+                  {isLoading ? (
+                    <div class="spinner-border mb-4 mt-4" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    <button type="submit" className="btn btn-primary">
+                      Signup
+                    </button>
+                  )}
+                </div>
+              </form>
 
-          {error ? (
-            <div className="errorDiv">
-              <p className="errorMessage">{error}</p>
+              {error ? (
+                <div className="errorDiv">
+                  <p className="errorMessage">{error}</p>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-          ) : (
-            ""
-          )}
-        </div>
-      ) : (
-        <p>Already Logged In</p>
-      )}
+          </div>
+        ) : (
+          <p>Already Logged In</p>
+        )}
+      </div>
     </div>
   );
 };

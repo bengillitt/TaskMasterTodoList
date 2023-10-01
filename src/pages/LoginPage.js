@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 const LoginPage = (props) => {
   const navigate = useNavigate();
@@ -67,68 +68,71 @@ const LoginPage = (props) => {
   };
 
   return (
-    <div className="maindiv">
-      {!isLogin ? (
-        <div>
-          <form onSubmit={loginHandler}>
-            <div className="mx-5">
-              <div className="input-group mb-3">
-                <span
-                  className="input-group-text mt-3"
-                  id="inputGroup-sizing-default"
-                >
-                  Email
-                </span>
-                <input
-                  type="text"
-                  className="form-control mt-3 inputRounding"
-                  aria-label="Sizing example input"
-                  name="username"
-                  value={email}
-                  onChange={emailHandler}
-                  aria-describedby="inputGroup-sizing-default"
-                  required
-                />
+    <div>
+      <Header isLogin={isLogin} />
+      <div className="maindiv">
+        {!isLogin ? (
+          <div>
+            <form onSubmit={loginHandler}>
+              <div className="mx-5">
+                <div className="input-group mb-3">
+                  <span
+                    className="input-group-text mt-3"
+                    id="inputGroup-sizing-default"
+                  >
+                    Email
+                  </span>
+                  <input
+                    type="text"
+                    className="form-control mt-3 inputRounding"
+                    aria-label="Sizing example input"
+                    name="username"
+                    value={email}
+                    onChange={emailHandler}
+                    aria-describedby="inputGroup-sizing-default"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <div className="mx-5">
-              <div className="input-group mb-3">
-                <span
-                  className="input-group-text"
-                  id="inputGroup-sizing-default"
-                >
-                  Password
-                </span>
-                <input
-                  type="password"
-                  className="form-control inputRounding"
-                  aria-label="Sizing example input"
-                  name="password"
-                  value={password}
-                  onChange={passwordHandler}
-                  aria-describedby="inputGroup-sizing-default"
-                  required
-                />
+              <div className="mx-5">
+                <div className="input-group mb-3">
+                  <span
+                    className="input-group-text"
+                    id="inputGroup-sizing-default"
+                  >
+                    Password
+                  </span>
+                  <input
+                    type="password"
+                    className="form-control inputRounding"
+                    aria-label="Sizing example input"
+                    name="password"
+                    value={password}
+                    onChange={passwordHandler}
+                    aria-describedby="inputGroup-sizing-default"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <div className="submitButton">
-              <button type="submit" className="btn btn-primary">
-                Login
-              </button>
-            </div>
-          </form>
+              <div className="submitButton">
+                <button type="submit" className="btn btn-primary">
+                  Login
+                </button>
+              </div>
+            </form>
 
-          {error ? (
-            <div className="errorDiv">
-              <p className="errorMessage">{error}</p>
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-      ) : (
-        <p>Already Logged In</p>
-      )}
+            {error ? (
+              <div className="errorDiv">
+                <p className="errorMessage">{error}</p>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        ) : (
+          <p>Already Logged In</p>
+        )}
+      </div>
     </div>
   );
 };

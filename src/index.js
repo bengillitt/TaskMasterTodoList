@@ -6,33 +6,28 @@ import App from "./pages/App";
 import reportWebVitals from "./reportWebVitals";
 import ErrorPage from "./pages/ErrorPage";
 // import ArchivesPage from "./pages/ArchivesPage";
-import Header from "./pages/Header";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Header />,
+    element: <App />,
     errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/",
-        element: <App />,
-      },
-      // {
-      //   path: "/archives",
-      //   element: <ArchivesPage />,
-      // },
-      {
-        path: "/signup",
-        element: <SignupPage />,
-      },
-      {
-        path: "/login",
-        element: <LoginPage />,
-      },
-    ],
+  },
+  // {
+  //   path: "/archives",
+  //   element: <ArchivesPage />,
+  // },
+  {
+    path: "/signup",
+    element: <SignupPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
   },
 ]);
 
