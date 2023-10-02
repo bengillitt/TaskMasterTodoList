@@ -45,20 +45,26 @@ const Header = (props) => {
                   Home
                 </Link>
               </li>
-              {/* <li className="nav-item">
-                <Link className="nav-link" to="./archives">
-                  Archives
+              <li className="nav-item">
+                <Link className="nav-link" to="/about">
+                  About
                 </Link>
-              </li> */}
+              </li>
             </ul>
             {isLogin !== "true" ? (
               <div>
-                <button className="btn btn-outline-success" type="submit">
+                <button
+                  className="btn btn-outline-primary mx-2 btn-sm"
+                  type="submit"
+                >
                   <Link className="btn" to="/signup">
                     Signup
                   </Link>
                 </button>
-                <button className="btn btn-outline-success" type="submit">
+                <button
+                  className="btn btn-outline-primary btn-sm"
+                  type="submit"
+                >
                   <Link className="btn" to="/login">
                     Login
                   </Link>
@@ -66,7 +72,7 @@ const Header = (props) => {
               </div>
             ) : (
               <button
-                className="btn btn-outline-success"
+                className="btn btn-outline-primary"
                 type="button"
                 onClick={LogoutHandler}
               >

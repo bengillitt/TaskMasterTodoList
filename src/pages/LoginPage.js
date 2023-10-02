@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 
+import "./LoginPage.module.css";
+
 const LoginPage = (props) => {
   const navigate = useNavigate();
 

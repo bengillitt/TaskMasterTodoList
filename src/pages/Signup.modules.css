@@ -1,3 +1,7 @@
+body {
+  background-color: grey;
+}
+
 .maindiv {
   width: 99.9vw;
   height: 92.5vh;

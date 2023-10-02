@@ -8,6 +8,7 @@ import ErrorPage from "./pages/ErrorPage";
 // import ArchivesPage from "./pages/ArchivesPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+import AboutPage from "./pages/AboutPage";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/about",
+    element: <AboutPage />,
     errorElement: <ErrorPage />,
   },
 ]);
